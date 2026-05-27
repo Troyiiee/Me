@@ -1,42 +1,25 @@
 function answer(btn, isYes) {
   const feedback = document.getElementById("feedback");
-  const buttons = document.querySelectorAll(".btn");
-// restart animation
-  buttons.forEach(b => b.classList.remove("correct", "wrong"));
-  void btn.offsetWidth;
+  document.querySelectorAll(".btn")
+    .forEach(b => b.classList.remove("correct", "wrong"));
 
   if (isYes) {
     btn.classList.add("correct");
     feedback.textContent = "I like you too ❤️";
 
+    localStorage.setItem("feelings", "Yes");
+
     setTimeout(() => {
-        window.location.href = "Date.html";
+      window.location.href = "Date.html";
     }, 2000);
   } else {
     btn.classList.add("wrong");
-    feedback.textContent = " Aray koooo!!! 🥺";
+    feedback.textContent = "Aray koooo!!! 🥺";
+    localStorage.setItem("feelings", "No");
   }
 }
+
 // Date
-function dateAnswer(btn, isYes) {
-    const Date = document.getElementById("date");
-    const calendarBox = document.getElementById("calendarBox");
-
-    // reset animation every click
-  btn.classList.remove("correct", "wrong");
-  void btn.offsetWidth;
-
-    if (isYes) {
-        btn.classList.add("correct");
-        Date.textContent = "Let's schedule it❤️";
-        calendarBox.style.display = "block";
-    } else {
-        btn.classList.add("wrong");
-        Date.textContent = "Maybe next time when you are free 🥺";
-        calendarBox.style.display = "none";
-    }
-  }
-
 function scheduleDate() {
   const date = document.getElementById("datePick").value;
   const time = document.getElementById("timePick").value;
@@ -45,16 +28,42 @@ function scheduleDate() {
   if (!date || !time) {
     result.textContent = "Please choose both date and time 📅";
     return;
-    } else {
-        result.textContent = " ";
-    }
+  }
 
-    result.textContent = `Our date is set on ${date} at ${time} ❤️`;
+  localStorage.setItem("date", date);
+  localStorage.setItem("time", time);
 
-    setTimeout(() => {
-    window.location.href = "TypeOfDates.html"; // 🔁 change to your next page
-    }, 2000);
+  result.textContent = `Our date is set on ${date} at ${time} ❤️`;
+
+  setTimeout(() => {
+    window.location.href = "TypeOfDates.html";
+  }, 2000);
 }
+function dateAnswer(btn, isYes) {
+  const dateText = document.getElementById("date");
+  const calendarBox = document.getElementById("calendarBox");
+
+  // reset animations
+  document.querySelectorAll(".btn")
+    .forEach(b => b.classList.remove("correct", "wrong"));
+
+  void btn.offsetWidth;
+
+  if (isYes) {
+    btn.classList.add("correct");
+    dateText.textContent = "Let's schedule it ❤️";
+    calendarBox.style.display = "block";
+  } else {
+    btn.classList.add("wrong");
+    dateText.textContent = "Maybe next time when you are free 🥺";
+    calendarBox.style.display = "none";
+
+    // 🔹 Clear previous date info
+    localStorage.removeItem("date");
+    localStorage.removeItem("time");
+  }
+}
+
 //TypeOfDates
 function select(card) {
   // remove active state from all
@@ -65,27 +74,67 @@ function select(card) {
 }
 
 // type of dates
+let redirected = false;
 
 function select(card, text) {
-  // Remove active class
+  if (redirected) return;
+
   document.querySelectorAll(".card")
     .forEach(c => c.classList.remove("active"));
 
   card.classList.add("active");
 
-  showToast(text + " selected");
+  localStorage.setItem("dateType", text);
+
+  showToast(text);
 }
 
-function showToast(message) {
+function showToast(choice) {
   const toast = document.getElementById("toast");
-  toast.textContent = "Get choice! Let's Enjoy our time together ❤️";
+
+  toast.textContent = `Great choice! Let's enjoy our ${choice} together ❤️`;
   toast.classList.add("show");
 
+  // Redirect after toast
   setTimeout(() => {
     toast.classList.remove("show");
+    redirected = true;
+    window.location.href = "information.html"; // 👈 change this
   }, 2000);
 }
 
+// animation
+
+function shakeNo(btn) {
+  btn.classList.add("active");
+  setTimeout(() => btn.classList.remove("active"), 400);
+}
+
+// laod data 
+window.onload = () => {
+  const feelings = localStorage.getItem("feelings");
+  const date = localStorage.getItem("date");
+  const time = localStorage.getItem("time");
+  const type = localStorage.getItem("dateType");
+
+  if (feelings)
+    document.getElementById("infoFeelings").textContent =
+      `Feelings: ${feelings} ❤️`;
+
+  if (date)
+    document.getElementById("infoDate").textContent =
+      `Date: ${date}`;
+
+  if (time)
+    document.getElementById("infoTime").textContent =
+      `Time: ${time}`;
+
+  if (type)
+    document.getElementById("infoType").textContent =
+      `Activity: ${type}`;
+};
+
 function next() {
-  window.location.href = "Feelings.html";
+  localStorage.clear();
+  window.location.href = "index.html";
 }
