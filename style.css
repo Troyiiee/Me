@@ -58,7 +58,6 @@ body::before {
 }
 
 .btn.next{
-  margin-top: 25px;
   background: #007bff;
   color: white;
 }
