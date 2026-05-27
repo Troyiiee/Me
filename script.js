@@ -103,6 +103,41 @@ function showToast(choice) {
   }, 2000);
 }
 
+const isinformationPage = document.body.id === "information-page";
+
+if (isinformationPage) {
+  let clicked = false;
+
+  document.addEventListener("click", () => {
+    if (clicked) return;
+    clicked = true;
+
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = "information.html";
+    }, 1000);
+  });
+}
+
+const isFeelingsPage = document.body.id === "feelings-page";
+
+if (isFeelingsPage) {
+  let clicked = false;
+
+  document.addEventListener("click", () => {
+    if (clicked) return;
+    clicked = true;
+
+    document.body.classList.add("fade-out");
+
+    setTimeout(() => {
+      window.location.href = "Feelings.html";
+    }, 1000);
+  });
+}
+
+
 // animation
 
 function shakeNo(btn) {
