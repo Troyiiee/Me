@@ -27,8 +27,8 @@ body::before {
 .quiz-container {
   background: rgb(240, 220, 109);
   padding: 30px;
+  margin-bottom: 10px;
   border-radius: 15px;
-  margin: 15px;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
@@ -52,6 +52,9 @@ body::before {
   color: white;
 }
 
+p{
+  padding: 10px;
+}
 .no {
   background: #f44336;
   color: white;
@@ -105,7 +108,7 @@ body::before {
 .choices {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   max-width: 420px;
   margin: 15px;
   background: rgb(240, 220, 109);
@@ -165,6 +168,105 @@ body::before {
   opacity: 1;
 }
 
+/* Animation */
+
+.cartoon {
+  font-size: 24px;
+  padding: 20px 30px;
+  background: #ffcc00;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.bounce {
+  animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* snake */
+
+.shake {
+  animation: none;
+}
+
+.shake.active {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-8px); }
+  100% { transform: translateX(0); }
+}
+
+/* anime */
+.anime-entrance {
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  animation: animeIn 1.2s ease-out forwards;
+}
+
+/* Text styling (optional) */
+.anime-entrance h1 {
+  font-size: 2rem;
+  color: white;
+}
+
+.anime-entrance p {
+  color: #f0f0f0;
+}
+
+/* delay */
+.anime-delay-1 { animation-delay: 0.2s; }
+.anime-delay-2 { animation-delay: 0.5s; }
+.anime-delay-3 { animation-delay: 0.8s; }
+
+/* Anime entrance keyframes */
+/*
+@keyframes animeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+*/
+/* slide */
+@keyframes animeSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.anime-entrance {
+  animation: animeSlide 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Sakura container */
 .sakura-container {
   position: fixed;
   top: 0;
@@ -200,5 +302,15 @@ body::before {
   }
   100% {
     transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+/* Side-to-side sway */
+@keyframes sway {
+  0%, 100% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 30px;
   }
 }
